@@ -148,6 +148,19 @@ Resources:
 
 The `Ciphertext` value is required and must include valid KMS ciphertext output in a Base64 encoded format.
 
+### Generating Ciphertext
+
+You can generate the ciphertext to pass to your CloudFormation stacks by using the AWS CLI, specifying the appropriate KMS Key Id and plaintext you want to encrypt.  The returned `CiphertextBlob` value is the Base64 encoded ciphertext that is expected for the KMS decrypt custom resource.
+
+> NOTE: You must have permissions to be able to encrypt using the KMS Key Id specified
+
+```
+$ aws kms encrypt --key-id 3ea941bf-ee54-4941-8f77-f1dd417667cd --plaintext 'Hello World!'
+{
+    "KeyId": "arn:aws:kms:us-west-2:429614120872:key/3ea941bf-ee54-4941-8f77-f1dd417667cd",
+    "CiphertextBlob": "AQECAHgohc0dbuzR1L3lEdEkDC96PMYUEV9nITogJU2vbocgQAAAAGowaAYJKoZIhvcNAQcGoFswWQIBADBUBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDB4uW3mVBu3L8ErR1AIBEIAnSkLisBBGibq5wjbMR/0Ew9QDAbP37gXU8jdOYYZFzNOO8IwbnvHS"
+}
+```
 
 ### Return Values
 
