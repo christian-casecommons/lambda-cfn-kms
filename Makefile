@@ -1,9 +1,13 @@
 # Parameters
 FUNCTION_NAME ?= cfnKmsDecrypt
-S3_BUCKET ?= 429614120872-cfn-lambda
-AWS_DEFAULT_REGION ?= us-west-2
+S3_BUCKET ?= 334274607422-cfn-lambda
+AWS_DEFAULT_REGION ?= us-east-1
+ENV ?= nil
 
 include Makefile.settings
+-include .env/$(ENV)
+
+.PHONY: clean build publish
 
 build: clean
 	@ ${INFO} "Building $(FUNCTION_NAME).zip..."
