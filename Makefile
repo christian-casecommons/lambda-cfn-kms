@@ -29,3 +29,7 @@ publish: build
 clean:
 	@ rm -rf src/*.pyc src/vendor build
 	@ ${INFO} "Removed all distributions"
+
+# IMPORTANT - ensures arguments are not interpreted as make targets
+%:
+	@:
