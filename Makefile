@@ -7,7 +7,10 @@ ENV ?= nil
 include Makefile.settings
 -include .env/$(ENV)
 
-.PHONY: clean build publish
+.PHONY: all orchestrate clean build publish
+all:
+	# do nothing
+orchestrate: build publish clean
 
 build: clean
 	@ ${INFO} "Building $(FUNCTION_NAME).zip..."
