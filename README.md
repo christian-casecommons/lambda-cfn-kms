@@ -65,7 +65,7 @@ The custom resource Lambda function must first be created with the following req
 - The Lambda runtime must be `python2.7`
 - The Lambda function must be published to an S3 bucket, with a known S3 object key and object version
 - The KMS key used for encryption must be exist before the CloudFormation stack is used (i.e. it cannot be created as part of the same stack)
-- The Lambda function must have KMS decrypt privileges for the KMS key used to encrypt the credentials 
+- The Lambda function must have KMS decrypt privileges for the KMS key used to encrypt the credentials
 - The Lambda function must have privileges to manage its own log group for logging
 
 The following CloudFormation snippet demonstrates creating an AWS Lambda function with an example IAM role.
@@ -77,18 +77,18 @@ Resources:
   KMSDecrypter:
     Type: "AWS::Lambda::Function"
     Properties:
-      Description: 
+      Description:
         Fn::Sub: "${AWS::StackName} KMS Decrypter"
       Handler: "cfn_kms_decrypt.handler"
       MemorySize: 128
       Runtime: "python2.7"
       Timeout: 300
-      Role: 
+      Role:
         Fn::Sub: ${KMSDecrypterRole.Arn}
-      FunctionName: 
+      FunctionName:
         Fn::Sub: "${AWS::StackName}-cfnKmsDecrypt"
       Code:
-        S3Bucket: 
+        S3Bucket:
           Fn::Sub: "${AWS::AccountId}-cfn-lambda"
         S3Key: "cfnKmsDecrypt.zip"
         S3ObjectVersion: "86jHvErMu.CpTjqBvSlJabgr22pYGa9S"
@@ -126,7 +126,7 @@ Resources:
             - "logs:DeleteLogGroup"
             - "logs:DeleteRetentionPolicy"
             - "logs:DeleteSubscriptionFilter"
-            Resource: 
+            Resource:
               Fn::Sub: "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${AWS::StackName}-cfnKmsDecrypt:*:*"
 ```
 
@@ -139,7 +139,7 @@ Resources:
   DbPasswordDecrypt:
     Type: "Custom::KMSDecrypt"
     Properties:
-      ServiceToken: 
+      ServiceToken:
         Fn::Sub: ${KMSDecrypter.Arn}
       Ciphertext: "<ciphertext>"
   ...
@@ -191,6 +191,12 @@ Resources:
         Fn::Sub: ${DbPasswordDecrypt.Plaintext}
 ```
 
+## Release Notes
+
+### Version 1.0.0
+
+ - **NEW FEATURE**: Added support for environment cbp-acceptance
+
 ## License
 
 Copyright (C) 2017.  Case Commons, Inc.
@@ -205,3 +211,4 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
 See www.gnu.org/licenses/agpl.html
+
